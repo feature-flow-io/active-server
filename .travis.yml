@@ -9,6 +9,9 @@ notifications:
 
 os: linux
 
+services:
+  - postgresql
+
 cache:
   bundler: true
 
@@ -18,5 +21,11 @@ before_install:
 install:
   - bundle install
 
+before_script:
+  - rails db:drop
+  - rails db:create
+  - rails db:schema:load
+
 script:
+  - bundle exec rspec
   - bundle exec rubocop
