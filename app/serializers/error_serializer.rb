@@ -1,16 +1,27 @@
 module ErrorSerializer
-  def self.serialize(errors)
-    return if errors.nil?
+  class << self
+    def serialize(errors)
+      return if errors.nil?
 
-    json = {}
+      json = {}
 
-    error_hash = errors.to_hash.map do |k, v|
-      v.map do |msg|
-        { source: { pointer: "/data/attributes/#{k}" }, type: k, detail: msg }
+      error_hash = if errors.is_a?(ActiveModel::Errors)
+                     errors.to_hash(true).map { |k, v| render_errors(errors: v, type: k) }
+                   else
+                     errors.to_hash.map { |k, v| render_errors(errors: v, type: k, klass: false) }
+                   end.flatten
+
+      json[:errors] = error_hash
+      json
+    end
+
+    def render_errors(errors:, type:, klass: true)
+      errors.map do |msg|
+        normalized_type = type.to_s.humanize
+        msg = "#{normalized_type} #{msg}" unless klass
+
+        { source: { pointer: "/data/attributes/#{type}" }, type: type, detail: msg }
       end
-    end.flatten
-
-    json[:errors] = error_hash
-    json
+    end
   end
 end
