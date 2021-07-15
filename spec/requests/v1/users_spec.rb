@@ -15,7 +15,7 @@ RSpec.describe "V1::Users", type: :request do
       it "sends the response" do
         post v1_users_path, params: valid_attributes
 
-        expect(attribute_keys).to match_array(%i[name email auth_token])
+        expect(attribute_keys).to match_array(%i[name email token])
         expect(response).to have_http_status(:created)
       end
     end
