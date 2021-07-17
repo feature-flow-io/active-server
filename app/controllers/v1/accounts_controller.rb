@@ -14,8 +14,8 @@ module V1
     end
 
     def show
-      skip_authorization
       account = Account.find(params[:id])
+      authorize account
       render json: account
     end
 

@@ -20,4 +20,28 @@ RSpec.describe AccountPolicy, type: :policy do
 
     it { is_expected.to permit_actions(%i[create]) }
   end
+
+  context "when being an owner" do
+    let(:collaborator) { create(:collaborator, :owner) }
+    let(:user) { collaborator.user }
+    let(:account) { collaborator.account }
+
+    it { is_expected.to permit_actions(%i[show]) }
+  end
+
+  context "when being an editor" do
+    let(:collaborator) { create(:collaborator) }
+    let(:user) { collaborator.user }
+    let(:account) { collaborator.account }
+
+    it { is_expected.to permit_actions(%i[show]) }
+  end
+
+  context "when being a pending collaborator" do
+    let(:collaborator) { create(:collaborator, :pending, :owner) }
+    let(:user) { collaborator.user }
+    let(:account) { collaborator.account }
+
+    it { is_expected.to forbid_actions(%i[show]) }
+  end
 end
