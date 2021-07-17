@@ -46,4 +46,13 @@ RSpec.describe "V1::Accounts", type: :request do
       end
     end
   end
+
+  describe "#show" do
+    it "returns the account" do
+      account = create(:account)
+      get v1_account_path(account), headers: authorized_header(user)
+
+      expect(attribute_keys).to match_array(%i[name subdomain cname updated_at created_at])
+    end
+  end
 end

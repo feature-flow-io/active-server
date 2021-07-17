@@ -11,6 +11,11 @@ module V1
       end
     end
 
+    def show
+      account = Account.find(params[:id])
+      render json: account
+    end
+
     private
 
     def account_params

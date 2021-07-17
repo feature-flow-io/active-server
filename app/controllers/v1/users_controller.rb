@@ -1,15 +1,20 @@
 module V1
   class UsersController < ApplicationController
-    skip_before_action :authenticate_user
+    skip_before_action :authenticate_user, only: %i[create]
 
     def create
-      @user = User.new(user_params)
+      user = User.new(user_params)
 
-      if @user.save
-        render json: @user, serializer: SessionSerializer, status: :created
+      if user.save
+        render json: user, serializer: SessionSerializer, status: :created
       else
-        render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
+        render json: ErrorSerializer.serialize(user.errors), status: :unprocessable_entity
       end
+    end
+
+    def show
+      user = User.find(params[:id])
+      render json: user
     end
 
     private
