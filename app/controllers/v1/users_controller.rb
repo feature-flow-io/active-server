@@ -13,8 +13,8 @@ module V1
     end
 
     def show
-      skip_authorization
       user = User.find(params[:id])
+      authorize user
       render json: user
     end
 

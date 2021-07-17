@@ -13,6 +13,8 @@ class Account < ApplicationRecord
   validates :subdomain, presence: true, uniqueness: { case_sensitive: false }, exclusion: { in: RESERVED_SUBDOMAINS }
   validates :cname, format: { without: /\s/, message: "shouldn't contain spaces" }
 
+  scope :without_pending_collaborators, -> { where.not(collaborators: { joined_at: nil }) }
+
   private
 
   def normalize_cname
