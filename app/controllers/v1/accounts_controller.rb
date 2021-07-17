@@ -6,6 +6,7 @@ module V1
       account.creator = Current.user
 
       if account.save
+        account.collaborators.create!(role: "owner", joined_at: Time.zone.now, user: Current.user)
         render json: account, status: :created
       else
         render json: ErrorSerializer.serialize(account.errors), status: :unprocessable_entity

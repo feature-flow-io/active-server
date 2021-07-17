@@ -21,6 +21,17 @@ RSpec.describe "V1::Accounts", type: :request do
         expect(Account.first.creator).to eq(user)
       end
 
+      it "creates a new collaborator record for the current user" do
+        Timecop.freeze(Time.zone.today) do
+          post v1_accounts_path, params: valid_attributes, headers: authorized_header(user)
+
+          collaborator = user.collaborators.first
+          expect(collaborator.account).to eq(Account.first)
+          expect(collaborator.role).to eq("owner")
+          expect(collaborator.joined_at).to eq(Time.zone.now)
+        end
+      end
+
       it "returns the attributes" do
         post v1_accounts_path, params: valid_attributes, headers: authorized_header(user)
 
