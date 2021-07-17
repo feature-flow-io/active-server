@@ -1,6 +1,6 @@
 module V1
   class UsersController < ApplicationController
-    skip_before_action :authenticate_user, only: %i[create]
+    skip_after_action :verify_authorized, only: %i[create]
 
     def create
       user = User.new(user_params)
@@ -13,6 +13,7 @@ module V1
     end
 
     def show
+      skip_authorization
       user = User.find(params[:id])
       render json: user
     end

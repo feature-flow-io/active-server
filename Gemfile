@@ -9,6 +9,7 @@ gem "bootsnap", ">= 1.4.4", require: false
 gem "jwt", "~> 2.2", ">= 2.2.3"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
+gem "pundit", "~> 2.1"
 gem "rails", "~> 6.1.4"
 # gem "redis", "~> 4.0"
 
@@ -18,6 +19,7 @@ gem "rails", "~> 6.1.4"
 group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "factory_bot_rails", "~> 6.2"
+  gem "pundit-matchers", "~> 1.7"
   gem "rspec-rails", "~> 5.0", ">= 5.0.1"
   gem "shoulda-matchers", "~> 4.5", ">= 4.5.1"
 end

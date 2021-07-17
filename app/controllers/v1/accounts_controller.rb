@@ -2,6 +2,7 @@ module V1
   class AccountsController < ApplicationController
     def create
       account = Account.new(account_params)
+      authorize account
       account.creator = Current.user
 
       if account.save
@@ -12,6 +13,7 @@ module V1
     end
 
     def show
+      skip_authorization
       account = Account.find(params[:id])
       render json: account
     end

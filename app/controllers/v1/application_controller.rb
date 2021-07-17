@@ -2,7 +2,8 @@ module V1
   class ApplicationController < ::ApplicationController
     include ActionController::MimeResponds
     include SetCurrentUserDetails
-    include Authenticable
+    include SessionAttributes
+    include Authorizable
 
     private
 
