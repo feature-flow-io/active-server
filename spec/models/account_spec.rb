@@ -5,6 +5,10 @@ RSpec.describe Account, type: :model do
 
   describe "associations" do
     it { is_expected.to belong_to(:creator).class_name("User").optional }
+
+    it { is_expected.to have_many(:collaborators).dependent(:destroy) }
+
+    it { is_expected.to have_many(:users).through(:collaborators) }
   end
 
   describe "validations" do

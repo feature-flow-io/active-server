@@ -4,6 +4,8 @@ class Account < ApplicationRecord
   before_validation :normalize_cname
 
   belongs_to :creator, class_name: "User", optional: true
+  has_many :collaborators, dependent: :destroy
+  has_many :users, through: :collaborators
 
   enum status: %w[active inactive].index_with { |role| role }
 
