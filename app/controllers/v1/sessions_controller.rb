@@ -1,5 +1,7 @@
 module V1
   class SessionsController < ApplicationController
+    skip_before_action :authenticate_user
+
     def create
       auth = Authentication.new(user_params)
 
