@@ -26,7 +26,7 @@ RSpec.describe AccountPolicy, type: :policy do
     let(:user) { collaborator.user }
     let(:account) { collaborator.account }
 
-    it { is_expected.to permit_actions(%i[show]) }
+    it { is_expected.to permit_actions(%i[show update]) }
   end
 
   context "when being an editor" do
@@ -35,6 +35,7 @@ RSpec.describe AccountPolicy, type: :policy do
     let(:account) { collaborator.account }
 
     it { is_expected.to permit_actions(%i[show]) }
+    it { is_expected.to forbid_actions(%i[update]) }
   end
 
   context "when being a pending collaborator" do
@@ -42,6 +43,6 @@ RSpec.describe AccountPolicy, type: :policy do
     let(:user) { collaborator.user }
     let(:account) { collaborator.account }
 
-    it { is_expected.to forbid_actions(%i[show]) }
+    it { is_expected.to forbid_actions(%i[show update]) }
   end
 end

@@ -1,7 +1,7 @@
 module V1
   class AccountsController < ApplicationController
     def create
-      account = Account.new(account_params)
+      account = Account.new(new_account_params)
       authorize account
       account.creator = Current.user
 
@@ -19,10 +19,25 @@ module V1
       render json: account
     end
 
+    def update
+      account = Account.find(params[:id])
+      authorize account
+
+      if account.update(edit_account_params)
+        render json: account
+      else
+        render json: ErrorSerializer.serialize(account.errors), status: :unprocessable_entity
+      end
+    end
+
     private
 
-    def account_params
+    def new_account_params
       jsonapi_params(only: %i[name subdomain])
+    end
+
+    def edit_account_params
+      jsonapi_params(only: %i[name cname])
     end
   end
 end

@@ -67,4 +67,42 @@ RSpec.describe "V1::Accounts", type: :request do
       expect(attribute_keys).to match_array(%i[name subdomain cname updated_at created_at])
     end
   end
+
+  describe "#updated_at" do
+    let(:account) { create(:account) }
+
+    before do
+      create(:collaborator, :owner, user: user, account: account)
+    end
+
+    context "when the request is valid" do
+      let(:valid_attributes) { { data: { attributes: { name: "New name", cname: "name.abeid.com" } } }.to_json }
+
+      it "updates the account" do
+        patch v1_account_path(account), params: valid_attributes, headers: authorized_header(user)
+
+        account.reload
+        expect(account.name).to eq("New name")
+        expect(account.cname).to eq("name.abeid.com")
+      end
+
+      it "returns the attributes" do
+        patch v1_account_path(account), params: valid_attributes, headers: authorized_header(user)
+
+        expect(attribute_keys).to match_array(%i[name subdomain cname updated_at created_at])
+        expect(relationship_keys).to match_array(%i[creator])
+      end
+    end
+
+    context "when the request is invalid" do
+      let(:invalid_attributes) { { data: { attributes: { name: "", cname: "name.abeid.com" } } }.to_json }
+
+      it "returns an error" do
+        patch v1_account_path(account), params: invalid_attributes, headers: authorized_header(user)
+
+        expect(response_errors).to match_array(%i[name])
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
 end
