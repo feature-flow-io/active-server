@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "V1::Accounts", type: :request do
   let(:user) { create(:user) }
+  let(:attribute_array) { %i[name subdomain cname status updated_at created_at] }
 
   describe "#create" do
     context "when the request is valid" do
@@ -35,7 +36,7 @@ RSpec.describe "V1::Accounts", type: :request do
       it "returns the attributes" do
         post v1_accounts_path, params: valid_attributes, headers: authorized_header(user)
 
-        expect(attribute_keys).to match_array(%i[name subdomain cname updated_at created_at])
+        expect(attribute_keys).to match_array(attribute_array)
         expect(relationship_keys).to match_array(%i[creator])
       end
     end
@@ -64,7 +65,7 @@ RSpec.describe "V1::Accounts", type: :request do
       create(:collaborator, user: user, account: account)
       get v1_account_path(account), headers: authorized_header(user)
 
-      expect(attribute_keys).to match_array(%i[name subdomain cname updated_at created_at])
+      expect(attribute_keys).to match_array(attribute_array)
     end
   end
 
@@ -89,7 +90,7 @@ RSpec.describe "V1::Accounts", type: :request do
       it "returns the attributes" do
         patch v1_account_path(account), params: valid_attributes, headers: authorized_header(user)
 
-        expect(attribute_keys).to match_array(%i[name subdomain cname updated_at created_at])
+        expect(attribute_keys).to match_array(attribute_array)
         expect(relationship_keys).to match_array(%i[creator])
       end
     end
