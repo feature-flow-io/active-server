@@ -111,6 +111,10 @@ GEM
     pg (1.2.3)
     puma (5.3.2)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
+    pundit-matchers (1.7.0)
+      rspec-rails (>= 3.0.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -195,6 +199,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     thor (1.1.0)
+    timecop (0.9.4)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.0.0)
@@ -216,6 +221,8 @@ DEPENDENCIES
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
+  pundit (~> 2.1)
+  pundit-matchers (~> 1.7)
   rails (~> 6.1.4)
   rspec-rails (~> 5.0, >= 5.0.1)
   rubocop (~> 1.15)
@@ -223,6 +230,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.3)
   shoulda-matchers (~> 4.5, >= 4.5.1)
   spring
+  timecop (~> 0.9.4)
   tzinfo-data
 
 RUBY VERSION

@@ -10,7 +10,7 @@ RSpec.describe "V1::Sessions", type: :request do
       it "returns the user attributes" do
         post v1_sessions_path, params: valid_attributes
 
-        expect(attribute_keys).to match_array(%i[name email token])
+        expect(attribute_keys).to match_array(%i[name email token updated_at created_at])
         expect(response).to have_http_status(:ok)
       end
     end

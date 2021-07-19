@@ -1,5 +1,7 @@
 module V1
   class SessionsController < ApplicationController
+    skip_after_action :verify_authorized, only: %i[create]
+
     def create
       auth = Authentication.new(user_params)
 
