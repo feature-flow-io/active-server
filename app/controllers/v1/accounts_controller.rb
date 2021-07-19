@@ -37,7 +37,7 @@ module V1
     end
 
     def edit_account_params
-      jsonapi_params(only: %i[name cname])
+      jsonapi_params(only: %i[name cname status])
     end
   end
 end

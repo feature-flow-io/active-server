@@ -77,7 +77,7 @@ RSpec.describe "V1::Accounts", type: :request do
     end
 
     context "when the request is valid" do
-      let(:valid_attributes) { { data: { attributes: { name: "New name", cname: "name.abeid.com" } } }.to_json }
+      let(:valid_attributes) { { data: { attributes: { name: "New name", cname: "name.abeid.com", status: "inactive" } } }.to_json }
 
       it "updates the account" do
         patch v1_account_path(account), params: valid_attributes, headers: authorized_header(user)
@@ -85,6 +85,7 @@ RSpec.describe "V1::Accounts", type: :request do
         account.reload
         expect(account.name).to eq("New name")
         expect(account.cname).to eq("name.abeid.com")
+        expect(account.status).to eq("inactive")
       end
 
       it "returns the attributes" do
